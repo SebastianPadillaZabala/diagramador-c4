@@ -26,7 +26,7 @@ app.use(cookieParser())
 app.use('/', require('./routes/router.js'))
 
 var server = app.listen(process.env.PORT || 3000, ()=>{
-    console.log('SERVER UP running in http://localhost:3000')
+    console.log('SERVER UP running in https://ec2-52-87-253-204.compute-1.amazonaws.com/:3000')
 })
 
 const io = socket(server)
