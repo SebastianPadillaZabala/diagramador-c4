@@ -363,8 +363,7 @@ var room = window.location.href.split('/')[4]
 function setup() {
   // put setup code here
   createCanvas(1520,630)
-  //socket = io.connect('https://sw-diagc4.herokuapp.com/')
-  socket = io.connect('http://localhost:3000')
+  socket = io.connect('https://ec2-52-87-253-204.compute-1.amazonaws.com/')
   socket.on('welcome', (msg)=>{
     console.log('Received: ', msg);
   })
