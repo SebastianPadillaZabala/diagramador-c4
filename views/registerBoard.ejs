@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <%- include("head.ejs")%>
+    </head>
+    <body>
+                    <!-- component -->
+<div class="w-full h-auto block h-screen bg-gradient-to-r from-orange-100 via-orange-200 to-orange-300 p-4 flex items-center justify-center" >
+    <div class="bg-white py-6 px-10 sm:max-w-md w-full ">
+        <div class="sm:text-3xl text-2xl font-semibold text-center text-Black  mb-12">
+            Create a new board
+        </div>
+        <form class="w-full" action="/registerBoardd" method="POST">
+            <div>
+                 <input type="text" id="name" name="name" class="focus:outline-none border-b w-full pb-2 border-orange-400 placeholder-gray-500"  placeholder="Name "/>
+            </div>
+             <div>
+                 <input type="text" id="nivel" name="nivel" class="focus:outline-none border-b w-full pb-2 border-orange-400 placeholder-gray-500 my-8"  placeholder="Nivel"/>
+            </div>
+            <div class="flex justify-center my-6">
+                <button  type="submit"
+                class=" w-full py-4 bg-orange-600 rounded-lg
+                text-green-100 " >
+                    Create
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+            </body>
+        </html>

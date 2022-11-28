@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <%- include("head.ejs")%>
+    </head>
+    <body>
+        <%- include("navbar.ejs")%>
+                    <div class="py-6">
+                        <h1 class="text-3xl text-orange-600 font-bold text-center">Tableros de Trabajo</h1>
+                        <h3 class="mt-4 text-center text-xl text-gray-600">Aquí se encuentran todos tus tableros de trabajo, selecciona alguno y empezemos a trabajar.</h3>
+                    
+                    <div class="md:flex md:justify-center md:space-x-8
+                        md:px-14">
+                        <!-- box-1 -->
+                        <div class="mt-16 py-2 px-4 bg-whit w-72 bg-white
+                            rounded-xl shadow-lg hover:shadow-xl transform
+                            hover:scale-110 transition duration-500 mx-auto
+                            md:mx-0">
+                            <div class="w-sm">
+                                <img class="w-64"
+                                    src="https://img.freepik.com/vector-gratis/ilustracion-concepto-prueba-codigo-software_114360-8114.jpg?w=1060&t=st=1666810576~exp=1666811176~hmac=669d51cce545c4dea948913ea62f4405ec95ad9ad259f2fbbc74ec2d9f159b38"
+                                    alt="" />
+                                <div class="mt-4 text-orange-600 text-center">
+                                    <h1 class="text-xl font-bold">Personales</h1>
+                                    <p class="mt-4 text-gray-600">Aqui se encuentran todos tus tableros de trabajo que creaste anteriormente.</p>
+                                    <a href="/personal">
+                                    <button class="mt-8 mb-4 py-2 px-14
+                                        rounded-lg bg-orange-600 text-white
+                                        tracking-widest hover:bg-orange-500
+                                        transition duration-200">Ingresar</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:flex md:justify-center md:space-x-8
+                            md:px-14">
+                            <!-- box-1 -->
+                            <div class="mt-16 py-2 px-4 bg-whit w-72 bg-white
+                                rounded-xl shadow-lg hover:shadow-xl transform
+                                hover:scale-110 transition duration-500 mx-auto
+                                md:mx-0">
+                                <div class="w-sm">
+                                    <img class="w-64"
+                                        src="https://img.freepik.com/vector-gratis/ilustracion-concepto-teletrabajo_114360-5624.jpg?w=1060&t=st=1666810522~exp=1666811122~hmac=45d551b6d1ca15e3388195f1f3f82bfa554112c11e49cc16da631b98d406c7c9"
+                                        alt="" />
+                                    <div class="mt-4 text-orange-600
+                                        text-center">
+                                        <h1 class="text-xl font-bold">Compartidos</h1>
+                                        <p class="mt-4 text-gray-600">Aqui se encuetran todos los tableros de trabajo a los que fuiste invitado a colaborar.</p>
+                                        <a href="/compartidos">
+                                        <button class="mt-8 mb-4 py-2 px-14
+                                            rounded-lg bg-orange-600 text-white
+                                            tracking-widest hover:bg-orange-500
+                                            transition duration-200">Ingresar</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                           
+            </body>
+      
+        </html>

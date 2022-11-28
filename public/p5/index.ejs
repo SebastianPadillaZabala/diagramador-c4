@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lienzo</title>
+  <%- include("head.ejs")%>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: white; 
+    }
+  </style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
+  <!-- <script src="../addons/p5.sound.js"></script> -->
+  <script src="../sketch.js"></script>
+  <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
+  <%- include("navbar.ejs")%>
+  <div class="bg-gray-200 px-4 md:px-0 mx-auto ml-2 flex justify-start gap-2">
+    <button onclick="prepararParaColocarPersona()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Person</button>
+    <button onclick="prepararParaColocarSistema(true)" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">System</button>
+    <button onclick="prepararParaColocarSistema(false)" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">System existing</button>
+    <button onclick="prepararParaColocarRelacion()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Relation</button>
+    <button onclick="prepararParaColocarDatabase()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">DataBase</button>
+    <button onclick="prepararParaColocarMobile()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Mobile</button>
+    <button onclick="prepararParaColocarWeb()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Web</button>
+    <button onclick="prepararParaColocarContainer()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Container</button>
+    <button onclick="prepararParaColocarComponent()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Component</button>
+    <button onclick="mostrarModalImportar()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Importar</button>
+    <button onclick="exportar()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Exportar</button>
+    <button onclick="eliminarForma()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Delete</button>
+    <button onclick="mostrarModalPassword()" class="mt-4 mb-2 py-2 px-6
+    rounded-lg bg-orange-600 text-white hover:bg-orange-500
+    transition duration-200">Uuid</button>
+  </div>
+</head>
+<body>
+   <!-- modal Importar -->
+  <div class="modalImportar h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-orange bg-opacity-50 hidden">
+    <!-- modal -->
+    <div class="bg-orange-600 rounded shadow-lg w-10/12 md:w-1/3">
+      <!-- modal header -->
+      <div class="border-b px-4 py-2 flex justify-between items-center">
+        <h3 class="font-semibold text-white text-lg">Importar</h3>
+        <button onclick="ocultarModalImportar()" class="text-white close-modal">X</button>
+      </div>
+      <!-- modal body -->
+      <div class="p-3 text-white">
+        "Arrastre el archivo aqui"
+        <input type="file" id="campoparasubirarchivo">
+      </div>
+      <div class="flex justify-end items-center w-100 border-t p-3">
+        <button onclick="ocultarModalImportar()" class="bg-gray-700 hover:bg-gray-800 px-3 py-1 rounded text-white mr-1 close-modal">Cancel</button>
+        <button onclick="importar()" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white">Ok</button>
+      </div>
+    </div>
+  </div>
+  <!-- modal password -->
+  <div class="modalPass h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-orange bg-opacity-50 hidden">
+    <!-- modal -->
+    <div class="bg-orange-600 rounded shadow-lg w-10/12 md:w-1/3">
+      <!-- modal header -->
+      <div class="border-b px-4 py-2 flex justify-between items-center">
+        <h3 class="font-semibold text-white text-lg">Compartir Password</h3>
+        <button onclick="ocultarModalPassword()" class="text-white close-modal">X</button>
+      </div>
+      <!-- modal body -->
+      <div class="p-3">
+        <label class="block mb-2 text-xs font-bold tracking-wide text-white uppercase">
+          Password de la sala
+        </label>
+        <input value="<%= board.passw %>" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded
+        appearance-none focus:outline-none focus:bg-white type="text" name="" id="">
+      </div>
+    </div>
+  </div>
+  <!-- modal Editar -->
+<div class="modaleditarfigura h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-orange bg-opacity-50 hidden">
+  <!-- modal -->
+  <div class="bg-orange-600 rounded shadow-lg w-10/12 md:w-1/3">
+    <!-- modal header -->
+    <div class="border-b px-4 py-2 flex justify-between items-center">
+      <h3 class="font-semibold text-white text-lg">Editar</h3>
+      <button onclick="ocultarModalEditarFigura()" class="text-white close-modal">X</button>
+    </div>
+    <!-- modal body -->
+    <div class="p-3">
+      <div class="w-full px-3 mb-6">
+        <label class="block mb-2 text-xs font-bold tracking-wide text-white">
+          Nombre
+        </label>
+        <input class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200
+        border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" 
+        id="campoparacambiarnombre" type="text" placeholder="{nombre}">
+        <label>
+          <span class="block mb-2 text-xs font-bold tracking-wide text-white uppercase">
+            Descripcion
+          </span>
+          <textarea id="campoparacambiardescripcion" class="block w-full px-4 py-3 mt-1
+          mb-3 text-gray-700 bg-gray-200 rounded form-textarea focus:outline-none" rows="4"
+          placeholder="{descripcion}">
+        </textarea>
+        </label>
+      </div>
+    </div>
+    <div class="flex justify-end items-center w-100 border-t p-3">
+      <button onclick="ocultarModalEditarFigura()" class="bg-gray-700 hover:bg-gray-800 px-3 py-1 rounded text-white mr-1 close-modal">Cancel</button>
+      <button onclick="cambiarTextoDeFigura()" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white">Ok</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script>
+  const $canvas = document.querySelector("#canvas"),
+			$btnDescargar = document.querySelector("#btnDescargar")
+  const modalEditarFigura = document.querySelector('.modaleditarfigura')
+  const campoParaCambiarNombre = document.getElementById('campoparacambiarnombre')
+  const campoParaCambiarDescripcion = document.getElementById('campoparacambiardescripcion')
+  const modalImportar = document.querySelector('.modalImportar')
+  const campoParaSubirArchivo = document.getElementById('campoparasubirarchivo')
+  const modalParaMostrarPassword = document.querySelector('.modalPass')
+
+  function mostrarModalEditarFigura(){
+    modalEditarFigura.classList.remove('hidden')
+    campoParaCambiarNombre.value = elementoParaEditar.getNombre
+    campoParaCambiarDescripcion.value = elementoParaEditar.getDescripcion
+
+  }
+  function ocultarModalEditarFigura(){
+    modalEditarFigura.classList.add('hidden')
+  }
+
+  function mostrarModalImportar(){
+    modalImportar.classList.remove('hidden')
+  }
+
+  function ocultarModalImportar(){
+    modalImportar.classList.add('hidden')
+  }
+
+  function mostrarModalPassword(){
+    modalParaMostrarPassword.classList.remove('hidden')
+  }
+
+  function ocultarModalPassword(){
+    modalParaMostrarPassword.classList.add('hidden')
+  }
+
+  function prepararParaColocarRelacion(){
+   nivelDeDiagrama = 1
+   preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'relacion'
+ }
+
+ function prepararParaColocarSistema(esAzul){
+   preparadoParaColocarElemento = !preparadoParaColocarElemento
+   if(esAzul){
+     elementoQueSeColocara = 'sistema en diseño'
+   }else{
+     elementoQueSeColocara = 'sistema'
+   }
+ }
+
+ function prepararParaColocarPersona(){
+   preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'persona'
+ }
+
+ function prepararParaColocarDatabase(){
+  preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'database'
+ }
+
+ function prepararParaColocarMobile(){
+  preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'mobile'
+ }
+
+ function prepararParaColocarWeb(){
+  preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'web'
+ }
+
+ function prepararParaColocarComponent(){
+  preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'component'
+ }
+
+ function prepararParaColocarContainer(){
+  preparadoParaColocarElemento = !preparadoParaColocarElemento
+   elementoQueSeColocara = 'container'
+ }
+
+ function cambiarTextoDeFigura(){
+  elementoParaEditar.setNombre = campoParaCambiarNombre.value
+  elementoParaEditar.setDescripcion = campoParaCambiarDescripcion.value
+  ocultarModalEditarFigura()
+  socket.emit('mouse', vectorDeEntidades, vectorDeLineas)
+ }
+
+ function exportar(){
+  const vectorDescargar = [vectorDeEntidades, vectorDeLineas]
+  saveJSON(vectorDescargar, 'sketch.json')
+ }
+
+ function importar(){
+  try {
+    let file = campoParaSubirArchivo.files
+    const reader = new FileReader()
+    reader.onload = function(event){
+      let objetosRecuperados = JSON.parse(event.target.result)
+      console.log(objetosRecuperados[0]);
+      draw2( objetosRecuperados[0], objetosRecuperados[1])
+    }
+    reader.readAsText(file[0])
+    campoParaSubirArchivo.value = null
+    ocultarModalImportar()
+  } catch (error) {
+    alert('ocurrio un error al importar')
+  }
+ }
+
+</script>
