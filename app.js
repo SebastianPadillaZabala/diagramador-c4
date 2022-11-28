@@ -25,8 +25,8 @@ app.use(cookieParser())
 //llamar al router
 app.use('/', require('./routes/router.js'))
 
-var server = app.listen(process.env.PORT || 3000, ()=>{
-    console.log('SERVER UP running in https://ec2-52-87-253-204.compute-1.amazonaws.com/:3000')
+var server = app.listen(process.env.PORT || 8080, ()=>{
+    console.log('SERVER UP running in https://ec2-52-87-253-204.compute-1.amazonaws.com/:8080')
 })
 
 const io = socket(server)

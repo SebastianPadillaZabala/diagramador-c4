@@ -363,7 +363,7 @@ var room = window.location.href.split('/')[4]
 function setup() {
   // put setup code here
   createCanvas(1520,630)
-  socket = io.connect('https://ec2-52-87-253-204.compute-1.amazonaws.com/')
+  socket = io.connect('https://ec2-54-174-30-16.compute-1.amazonaws.com/:8080')
   socket.on('welcome', (msg)=>{
     console.log('Received: ', msg);
   })
