@@ -63,6 +63,17 @@ io.on('connection', (socket)=>{
     socket.on('mouse', mouseMsg)
 
     function mouseMsg(vectorDeEntidades2, vectorDeLineas2, room){
+         const vectorDescargar = [vectorDeEntidades2, vectorDeLineas2]
+        var json = JSON.stringify(vectorDescargar)
+        conection.query(
+            "UPDATE boards SET archivo = $1 WHERE id_board = $2",
+            [ json, room],
+            (error, result) => {
+              if (error) {
+                console.log(error);
+              }
+            }
+          );
         socket.in(room).emit('mouse', vectorDeEntidades2, vectorDeLineas2, room)
     }
 })

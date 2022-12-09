@@ -137,6 +137,7 @@
 </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   const $canvas = document.querySelector("#canvas"),
 			$btnDescargar = document.querySelector("#btnDescargar")
@@ -146,6 +147,17 @@
   const modalImportar = document.querySelector('.modalImportar')
   const campoParaSubirArchivo = document.getElementById('campoparasubirarchivo')
   const modalParaMostrarPassword = document.querySelector('.modalPass')
+
+  window.onload = function inicio()
+  {
+    var room = window.location.href.split('/')[4]
+      axios.get(`/lienzoo/${room}`).then(res => {
+      let objetosRecuperados = res.data
+      console.log(objetosRecuperados[0]);
+      draw2( objetosRecuperados[0], objetosRecuperados[1])
+      });
+  }
+
 
   function mostrarModalEditarFigura(){
     modalEditarFigura.classList.remove('hidden')

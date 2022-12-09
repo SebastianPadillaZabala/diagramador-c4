@@ -68,6 +68,17 @@ router.get('/lienzo/:id', authController.isAuthenticated, (req,res)=>{
     })
 })
 
+router.get('/lienzoo/:id', (req,res)=>{
+    const id_board = req.params.id
+    conection.query('SELECT * FROM boards WHERE id_board = $1', [id_board], (error, results)=>{
+        if(error){
+            throw error;
+        }else{
+           console.log(results.rows[0].archivo);
+            res.json(results.rows[0].archivo);
+        }
+    })
+})
 
 router.post('/register', authController.register)
 router.post('/login', authController.login)
