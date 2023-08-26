@@ -64,8 +64,21 @@ exports.login = async (req, res) => {
         "SELECT * FROM users WHERE email = $1",
         [email],
         async (error, results) => {
+        if(error){
+          console.log("Error login: " + error);
+          res.render("login", {
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Email y/o Password incorrectas",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: 2000,
+            ruta: "login",
+          });
+        }
+        console.log(results.rows.length);
           if (
-            results.length == 0 ||
+            results.rows.length == 0 ||
             !(await bcrypt.compare(pass, results.rows[0].password))
           ) {
             res.render("login", {
